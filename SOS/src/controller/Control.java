@@ -72,6 +72,10 @@ public class Control {
 	}
 	public void RegEmp(Amigo amigo, Artigo art, Emprestimo e)
 	{	
+			if(amigo.getQuantEmp().compareTo(e.getPodeEmprestar()))
+			{
+				
+			}
 						
 						art.setEmprestado(amigo);
 						amigo.setEmprestado(art);
