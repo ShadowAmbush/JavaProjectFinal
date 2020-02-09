@@ -24,8 +24,8 @@ public class Admin extends User {
 					+"      8-Registar Empréstimo                        \n"
 					+"      9-Registar Reserva                           \n"
 					+"      10-Registar Devolução                        \n"
-					+"      11-Configurar ficheiro de backup             \n"
-					+"      12-Configurar nº máximo de empréstimos       \n"
+					+"      11-Configurações                             \n"
+					+"      0-Sair       \n"
 					+"---------------------------------------------------\n"
 					+"opção : \n";
 		return menu;
@@ -36,7 +36,7 @@ public class Admin extends User {
 	public boolean ValidaOp(int op) {
 		// TODO Auto-generated method stub
 		
-		if (op >= 0 && op <= 12)
+		if (op >= 0 && op <= 11)
 			return true;
 		return false;
 	}

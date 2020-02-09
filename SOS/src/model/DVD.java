@@ -36,7 +36,8 @@ public class DVD extends Artigo {
 		@Override	
 		public String toString()
 		{
-			String string = super.toString() + "|            DVD           \n"+
+			String string = super.toString() + "___________________________\n"+
+											   "|            DVD           \n"+
 											   "|Id: " + getId()+"         \n"+
 		                                       "|Titulo: " + getTitulo() +"\n"+
 		                                       "|Categoria: " + getCat() +"\n"+

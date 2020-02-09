@@ -10,13 +10,17 @@ import java.util.Scanner;
 import controller.Control;
 import model.Admin;
 import model.Amigo;
+import model.Emprestimo;
 import model.Padrao;
 import model.User;
 
 public class MVCGestEmp implements Serializable{
+     static Integer dias = 3;
+	 static Integer totalEmp = 3;
 	
+	static ConfigView config = new ConfigView();
 	static Control control = new Control();
-	static MenuView menu = new MenuView();
+	static MenuRegArtigo menu = new MenuRegArtigo();
 	/**
 	 * 
 	 */
@@ -55,6 +59,7 @@ public class MVCGestEmp implements Serializable{
 					break;
 				case 3:
 					//Consultar empréstimos
+					control.ConsultarEmp();
 					break;
 				case 4:
 					//Consultar Artigos emprestados
@@ -73,10 +78,19 @@ public class MVCGestEmp implements Serializable{
 					amigo.setTelefone(IO.getInt());
 					System.out.println("Introduza a morada:");
 					amigo.setNome(IO.getString());
+					amigo.setQuantEmp(totalEmp);
 					control.RegistarAmigo(amigo);
 					break;
 				case 8:
 					//Registar Empréstimos
+					Emprestimo emp = new Emprestimo();
+					control.ConsultarAmigos();
+					System.out.println("ID do Amigo a emprestar:");
+					int idamigo = IO.getInt();
+					control.ConsultarArtigos();
+					System.out.println("ID do Artigo a emprestar:");
+					int idart =IO.getInt();
+					control.RegEmp(idamigo, idart, emp);
 					break;
 				case 9:
 					//Registar reserva
@@ -86,6 +100,7 @@ public class MVCGestEmp implements Serializable{
 					break;
 				case 11:
 					//Configurações
+					config.Configuracoes();
 					break;
 				
 				case 0:

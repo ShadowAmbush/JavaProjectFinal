@@ -28,7 +28,8 @@ public class Livro extends Artigo {
 	@Override
 	public String toString()
 	{
-		String string = super.toString() + "|           LIVRO          \n"+
+		String string = super.toString() + "___________________________\n"+
+										   "|           LIVRO          \n"+
 										   "|Id: " + getISBN()+"       \n"+
 	                                       "|Titulo: " + getTitulo()+" \n"+
 	                                       "|Autor: " + getAutor()+"\n";

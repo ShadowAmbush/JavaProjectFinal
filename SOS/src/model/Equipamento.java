@@ -23,7 +23,8 @@ public class Equipamento extends Artigo {
 	@Override	
 	public String toString()
 	{
-		String string = super.toString() + "|           EQUIPAMENTO          \n"+
+		String string = super.toString() + "_________________________________\n"+
+										   "|           EQUIPAMENTO          \n"+
 										   "|Tipo: " + getTipo()+"           \n"+
 	                                       "|Descrição: " + getDesc()+"      ";
 		return string;

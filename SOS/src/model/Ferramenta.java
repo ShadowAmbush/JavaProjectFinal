@@ -22,7 +22,8 @@ public class Ferramenta extends Artigo {
 		@Override	
 		public String toString()
 		{
-			String string = super.toString() + "|           OUTRO          \n"+
+			String string = super.toString() + "___________________________\n"+
+											   "|           FERRAMENTA          \n"+
 											   "|Tipo: " + getTipo()+"     \n"+
 		                                       "|Descrição: " + getDesc()+ "\n";
 			return string;

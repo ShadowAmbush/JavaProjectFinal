@@ -1,13 +1,28 @@
 package model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public abstract class Artigo{
 	
 	
+	private static final AtomicInteger cont = new AtomicInteger(1);
+	private final Integer artID;
+	private Amigo emprestado = new Amigo();
+	private Amigo reservado = new Amigo();
 	
-	private Amigo emprestado = null;
-	private Amigo reservado = null;
+	public Artigo()
+	{
+		artID = cont.getAndIncrement();
+	}
+	public Integer getArtID() {
+		return artID;
+	}
+	public AtomicInteger getCont() {
+		return cont;
+	}
+
 	
-	
+
 	public Amigo getEmprestado() {
 		return emprestado;
 	}
@@ -28,7 +43,7 @@ public abstract class Artigo{
 	@Override
 	public String toString() {
 		String string= "----------------------------\n"+
-					   "|          ARTIGO          |\n"+
+					   "|        ARTIGO Nº:" +artID+ "  |\n"+
 				       "----------------------------\n";
 		
 		return string;

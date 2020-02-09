@@ -18,6 +18,7 @@ public class Padrao extends User {
 					+"      3-Consultar lista de Empréstimos             \n"
 					+"      4-Consultar lista de Artigos Emprestados     \n"
 					+"      5-Consultar lista de Incumprimentos          \n"
+					+"      0-Sair          \n"
 					+"---------------------------------------------------\n"
 					+"opção : \n";
 		return menu;

@@ -9,7 +9,7 @@ import model.Ferramenta;
 import model.Livro;
 import model.Outro;
 
-public class MenuView {
+public class MenuRegArtigo {
 	
 	public  void MenuArtigos(Control control) {
 		
