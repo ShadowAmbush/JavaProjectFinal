@@ -43,7 +43,7 @@ public abstract class Artigo{
 	@Override
 	public String toString() {
 		String string= "----------------------------\n"+
-					   "|        ARTIGO Nº:" +artID+ "  |\n"+
+					   "|        ARTIGO Nº:" +artID+ "       |\n"+
 				       "----------------------------\n";
 		
 		return string;

@@ -10,6 +10,7 @@ import java.util.Scanner;
 import controller.Control;
 import model.Admin;
 import model.Amigo;
+import model.Artigo;
 import model.Emprestimo;
 import model.Padrao;
 import model.User;
@@ -84,13 +85,14 @@ public class MVCGestEmp implements Serializable{
 				case 8:
 					//Registar Empréstimos
 					Emprestimo emp = new Emprestimo();
+					
 					control.ConsultarAmigos();
 					System.out.println("ID do Amigo a emprestar:");
-					int idamigo = IO.getInt();
+					Amigo a =control.CheckAmigo(IO.getInt());
 					control.ConsultarArtigos();
 					System.out.println("ID do Artigo a emprestar:");
-					int idart =IO.getInt();
-					control.RegEmp(idamigo, idart, emp);
+					Artigo ar = control.CheckArtigo(IO.getInt());
+					control.RegEmp(a, ar, emp);
 					break;
 				case 9:
 					//Registar reserva

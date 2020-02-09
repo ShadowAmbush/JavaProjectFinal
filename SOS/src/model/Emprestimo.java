@@ -2,13 +2,13 @@ package model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Emprestimo extends Artigo{
+public class Emprestimo{
 	
-	private Amigo nome = new Amigo();
-	private Amigo quantEmp = new Amigo();
-	private Amigo telefone = new Amigo();
-	private Amigo morada = new Amigo();
+	private Amigo amigo = new Amigo();
+	private Integer contador = new Integer(0);
+	private AtomicInteger podeEmprestar = new AtomicInteger(amigo.getQuantEmp());
 	private Artigo artEmp;
 	private LocalDate data_Emp = LocalDate.now();
 	private LocalDate data_Lim = data_Emp.plus(1,ChronoUnit.DAYS);
@@ -16,24 +16,46 @@ public class Emprestimo extends Artigo{
 	String Data = data_Emp.format(dataform);
 	DateTimeFormatter datalimite = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	String DataFinal = data_Lim.format(datalimite);
-	public Amigo getNome() {
-		return nome;
+	
+	
+	
+	
+	public Integer getContador() {
+		return contador;
 	}
-	public void setNome(Amigo nome) {
-		this.nome = nome;
+	public void setContador(Integer contador) {
+		this.contador = contador;
 	}
-	public Amigo getQuantEmp() {
-		return quantEmp;
+	public AtomicInteger getPodeEmprestar() {
+		return podeEmprestar;
 	}
-	public void setQuantEmp(Amigo quantEmp) {
-		this.quantEmp = quantEmp;
+	public void setPodeEmprestar(AtomicInteger podeEmprestar) {
+		this.podeEmprestar.decrementAndGet();
 	}
-	public Amigo getTelefone() {
-		return telefone;
+	public void setNome(String nome) {
+		this.amigo.setNome(nome);
 	}
-	public void setTelefone(Amigo telefone) {
-		this.telefone = telefone;
+	public void setTelefone(Integer tele)
+	{
+		this.amigo.setTelefone(tele);
 	}
+	public void setMorada( String morada)
+	{
+		this.amigo.setMorada(morada);
+	}
+	public String getNome()
+	{
+		return amigo.getNome();
+	}
+	public Integer getTelefone()
+	{
+		return amigo.getTelefone();
+	}
+	public String getMorada()
+	{
+		return amigo.getNome();
+	}
+	
 	public Artigo getArtEmp() {
 		return artEmp;
 	}
@@ -69,9 +91,10 @@ public class Emprestimo extends Artigo{
 		
 		String string = "________________________\n"+
 					    "|       EMPRÉSTIMO       \n"+
-						"|Nome: " + nome +       "\n"+
-						"|Telefone: "+telefone+  "\n"+
-						"|Morada: "+morada+      "\n"+
+						"|Nome: " + amigo.getNome() +       "\n"+
+						"|Telefone: "+amigo.getTelefone()+  "\n"+
+						"|Morada: "+amigo.getMorada()+      "\n"+
+						"|Artigo emprestado: "+artEmp.getArtID()+"\n"+
 						"|Emprestado a: "+Data+  "\n"+
 						"|Devolver até: "+DataFinal+"\n";
 		

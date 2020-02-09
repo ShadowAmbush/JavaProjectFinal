@@ -45,13 +45,13 @@ public class Amigo{
 		this.morada = morada;
 	}
 	public Artigo getReservado() {
-		return reservado;
+		return this.reservado;
 	}
 	public void setReservado(Artigo reservado) {
 		this.reservado = reservado;
 	}
 	public Artigo getEmprestado() {
-		return emprestado;
+		return this.emprestado;
 	}
 	public void setEmprestado(Artigo emprestado) {
 		this.emprestado = emprestado;

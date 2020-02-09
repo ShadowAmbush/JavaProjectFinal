@@ -48,32 +48,40 @@ public class Control {
 
 		amigo.add(a);
 	}
-	public void RegEmp(Integer Amigo, Integer id, Emprestimo e)
-
+	public Amigo CheckAmigo(Integer Amigo)
 	{
-		for (Amigo a : amigo) {
+		for (Amigo a : amigo)
+		{
 			if(a.getAmigoID().equals(Amigo))
-			{
-				for (Artigo art : art) {
-					if(art.getArtID().equals(id))
-					{
-						art.setEmprestado(a);
-						a.setEmprestado(art);
-						e.setArtEmp(art);
-						emprestimo.add(e);
-						System.out.println("Empréstimo criado com sucesso!");
-					}
-					else
-					{
-						System.out.println("Nenhum Artigo corresponde ao valor introduzido!");}
-					}
-			}
-			else
-			{
-				System.out.println("Nenhum Amigo corresponde ao valor introduzido!");;
-				}
-			
+				return a;
 		}
+		System.out.println("Nenhum Amigo corresponde ao valor introduzido!");
+		return null;
+	}
+	public Artigo CheckArtigo(Integer id)
+	{
+		for (Artigo art : art)
+		{
+			if(art.getArtID().equals(id))
+				return art;
+		}
+		System.out.println("Nenhum Artigo corresponde ao valor introduzido!");
+		return null;
+		
+	
+	}
+	public void RegEmp(Amigo amigo, Artigo art, Emprestimo e)
+	{	
+						
+						art.setEmprestado(amigo);
+						amigo.setEmprestado(art);
+						e.setNome(amigo.getNome());
+						e.setTelefone(amigo.getTelefone());
+						e.setMorada(amigo.getMorada());
+						e.setArtEmp(art);
+//						amigo.setQuantEmp(quantEmp);
+						emprestimo.add(e);
+						System.out.println("Empréstimo criado com sucesso!");	
 	}
 
 	public void ConsultarArtigos()
