@@ -1,6 +1,5 @@
 package view;
 import view.MVCGestEmp;
-import model.Amigo;
 import view.IO;
 
 public class ConfigView {

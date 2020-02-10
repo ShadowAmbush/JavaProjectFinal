@@ -1,14 +1,19 @@
 package model;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Emprestimo{
+
+public class Emprestimo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Amigo amigo = new Amigo();
-	private Integer contador = new Integer(0);
-	private AtomicInteger podeEmprestar = new AtomicInteger(amigo.getQuantEmp());
+	
 	private Artigo artEmp;
 	private LocalDate data_Emp = LocalDate.now();
 	private LocalDate data_Lim = data_Emp.plus(1,ChronoUnit.DAYS);
@@ -20,18 +25,8 @@ public class Emprestimo{
 	
 	
 	
-	public Integer getContador() {
-		return contador;
-	}
-	public void setContador(Integer contador) {
-		this.contador = contador;
-	}
-	public AtomicInteger getPodeEmprestar() {
-		return podeEmprestar;
-	}
-	public void setPodeEmprestar(AtomicInteger podeEmprestar) {
-		this.podeEmprestar.decrementAndGet();
-	}
+	
+
 	public void setNome(String nome) {
 		this.amigo.setNome(nome);
 	}

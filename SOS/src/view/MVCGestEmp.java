@@ -15,19 +15,23 @@ import model.Emprestimo;
 import model.Padrao;
 import model.User;
 
-public class MVCGestEmp implements Serializable{
+public class MVCGestEmp {
      static Integer dias = 3;
-	 static Integer totalEmp = 3;
+	 static Integer totalEmp = 1;
 	
 	static ConfigView config = new ConfigView();
 	static Control control = new Control();
 	static MenuRegArtigo menu = new MenuRegArtigo();
+	static BackupView backup = new BackupView();
 	/**
+	 * @throws ClassNotFoundException 
 	 * 
 	 */
-	private static final long serialVersionUID = -8712655439587384301L;
-	public static void main(String[] args) throws IOException {
+	
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
+		
+		
 		
 		int op;
 		User ativo = restoreUser();
@@ -56,7 +60,16 @@ public class MVCGestEmp implements Serializable{
 					control.ConsultarArtigos(); 
 					break;
 				case 2:
-					control.ConsultarAmigos();
+					control.LerArrayBackup();
+//					try {
+//						control.ConsultarAmigos();
+//					} catch (ClassNotFoundException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 					break;
 				case 3:
 					//Consultar empréstimos
@@ -78,14 +91,13 @@ public class MVCGestEmp implements Serializable{
 					System.out.println("Introduza o telefone:");
 					amigo.setTelefone(IO.getInt());
 					System.out.println("Introduza a morada:");
-					amigo.setNome(IO.getString());
+					amigo.setMorada(IO.getString());
 					amigo.setQuantEmp(totalEmp);
 					control.RegistarAmigo(amigo);
 					break;
 				case 8:
 					//Registar Empréstimos
 					Emprestimo emp = new Emprestimo();
-					
 					control.ConsultarAmigos();
 					System.out.println("ID do Amigo a emprestar:");
 					Amigo a =control.CheckAmigo(IO.getInt());
@@ -101,6 +113,10 @@ public class MVCGestEmp implements Serializable{
 					//Registar devolução
 					break;
 				case 11:
+					//Backups
+					backup.Backups();
+					break;
+				case 12:
 					//Configurações
 					config.Configuracoes();
 					break;

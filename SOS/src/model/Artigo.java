@@ -1,26 +1,27 @@
 package model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.Serializable;
 
-public abstract class Artigo{
+public abstract class Artigo implements Serializable{
 	
 	
-	private static final AtomicInteger cont = new AtomicInteger(1);
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static int totalArtigos=0;
 	private final Integer artID;
-	private Amigo emprestado = new Amigo();
-	private Amigo reservado = new Amigo();
+	private Amigo emprestado;
+	private Amigo reservado;
 	
 	public Artigo()
 	{
-		artID = cont.getAndIncrement();
+		artID = ++totalArtigos;
 	}
 	public Integer getArtID() {
 		return artID;
 	}
-	public AtomicInteger getCont() {
-		return cont;
-	}
-
 	
 
 	public Amigo getEmprestado() {
