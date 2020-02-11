@@ -1,6 +1,10 @@
 package model;
 public class Ferramenta extends Artigo {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2132574895656173269L;
 		private String tipo = new String();
 		private String desc = new String();
 

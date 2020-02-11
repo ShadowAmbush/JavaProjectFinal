@@ -9,7 +9,11 @@ public class Amigo implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1506552126282228832L;
+	/**
+	 * 
+	 */
+	
 	private final Integer amigoID;
 	private static int totalAmigos=0;
 	private String nome = new String();

@@ -1,6 +1,10 @@
 package model;
 public class Equipamento extends Artigo {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4291397082070514570L;
 	private String tipo = new String();
 	private String desc = new String();
 	

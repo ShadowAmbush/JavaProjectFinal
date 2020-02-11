@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,8 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
-
 import model.Autor;
 import model.DVD;
 import model.Emprestimo;
@@ -18,7 +15,6 @@ import model.Ferramenta;
 import model.Livro;
 import model.Outro;
 import model.Realizador;
-import model.User;
 import model.Artigo;
 import model.Amigo;
 
@@ -117,40 +113,19 @@ public class Control {
 			System.out.println(e);
 		}
 	}
-	public void ConsultarAmigos() throws IOException, ClassNotFoundException{
-		 File file = new File("Amigos.dat");
-	        if (file.length() == 0)
-	        {
-	        	if(amigo.isEmpty() == true)
-	        		System.out.println("Sem Amigos a apresentar!");
-	        	for (Amigo a : amigo) {
+	public void ConsultarAmigos() throws IOException, ClassNotFoundException
+	{
+		
+		if(amigo.isEmpty() == true)
+	        	System.out.println("Sem Amigos a apresentar!");
+	        for (Amigo a : amigo) {
 			
 	        		System.out.println(a);
 	        		}
-	        }
-	        else
-	        {
-	        	Amigo ativo = null;
-		        	File f = new File("Amigos.dat");
-				if (!f.exists())
-					f = new File("Amigos.dat");
-				else
-				{
-				try
-				{
-					ObjectInputStream ficheiroIn = new ObjectInputStream(new FileInputStream("Amigos.dat"));
-					amigo = (ArrayList<Amigo>) ficheiroIn.readObject();
-					System.out.println(amigo);
-					
-					ficheiroIn.close();
-				} catch (IOException | ClassNotFoundException e)
-				{
-					e.printStackTrace();
-				}
-				}
-	        }
+	 }
+	       
 			
-	}
+	
 	public void BackupArtigos() throws IOException
 	{
 		FileOutputStream file = new FileOutputStream("Artigos.dat");
@@ -162,18 +137,31 @@ public class Control {
 			e.printStackTrace();
 		}
 		oos.close();
+		System.out.println("Backup de Amigos efectuado com sucesso para o ficheiro!");
 	}
 	public void BackupAmigos() throws IOException
 	{
-		FileOutputStream file = new FileOutputStream("Amigos.dat");
-		ObjectOutputStream oos = new ObjectOutputStream(file);
-		try {
+		try (FileOutputStream file = new FileOutputStream("teste.txt"))
+		{
+			ObjectOutputStream oos = new ObjectOutputStream(file);
+			for (Amigo amigo : amigo) {
 			oos.writeObject(amigo);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
+		}
+			oos.writeInt(amigo.size());
+			oos.close();
+		}catch(FileNotFoundException e)
+		{
 			e.printStackTrace();
 		}
-		oos.close();
+		catch(IOException c)
+		{
+			c.printStackTrace();
+		}
+			
+			
+			
+			System.out.println("Backup de Amigos efectuado com sucesso para o ficheiro!");
 	}
 	public void BackupEmp() throws IOException
 	{
@@ -186,17 +174,34 @@ public class Control {
 			e.printStackTrace();
 		}
 		oos.close();
+		System.out.println("Backup de Empréstimos efectuado com sucesso para o ficheiro!");
 	}
+	
 	public void LerArrayBackup()
 	{
 		
 	        try
 	        {
-	            FileInputStream fis = new FileInputStream("C:\\Users\\Nuno Matos\\Documents\\GitHub\\JavaProjectFinal\\SOS\\Amigos.dat");
-	            ObjectInputStream ois = new ObjectInputStream(fis);
-	            ArrayList<Amigo> recover = (ArrayList<Amigo>) ois.readObject();
-	            ois.close();
-	            fis.close();
+	        	ObjectInputStream In = new ObjectInputStream(new FileInputStream("teste.txt"));
+	            
+	        	//ArrayList<Amigo> amigo = (ArrayList<Amigo>)In.readObject();
+	        	
+	        		System.out.println("          	 AMIGOS.DAT           ");
+//	        		for (Amigo x : amigo)
+//	        		{
+//						System.out.println("--------------------------------");
+//						System.out.println(x);
+//					} 
+	        		
+	        		int num = In.readInt();
+	        		for (int i = 0; i < num; i++) {
+	        			Amigo amigo2 = (Amigo)In.readObject();
+						System.out.println(amigo2);
+					}
+	        		
+	        		In.close();
+	          
+	            
 	         }catch(IOException ioe){
 	             ioe.printStackTrace();
 	             return;
@@ -205,9 +210,13 @@ public class Control {
 	             c.printStackTrace();
 	             return;
 	          }
-	        	for(Amigo tmp: recover){
-	            System.out.println(tmp.toString());
-	        }
+	        
+	        	
+	        	
+           
+	        	
+	        	
+	        
 	
 	}
 }

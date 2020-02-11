@@ -9,7 +9,11 @@ public abstract class Artigo implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7387133703775892793L;
+	/**
+	 * 
+	 */
+	
 	private static int totalArtigos=0;
 	private final Integer artID;
 	private Amigo emprestado;

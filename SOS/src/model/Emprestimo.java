@@ -10,7 +10,12 @@ public class Emprestimo implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3635448363371970586L;
+
+	/**
+	 * 
+	 */
+	
 
 	private Amigo amigo = new Amigo();
 	

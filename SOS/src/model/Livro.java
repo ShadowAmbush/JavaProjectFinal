@@ -1,6 +1,10 @@
 package model;
 public class Livro extends Artigo {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8199552736503293792L;
 	private Integer ISBN = new Integer(0);
 	private String titulo = new String();
 	private Autor autor = new Autor();

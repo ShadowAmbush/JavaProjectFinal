@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.Scanner;
-
 import controller.Control;
 import model.Admin;
 import model.Amigo;
@@ -60,16 +58,9 @@ public class MVCGestEmp {
 					control.ConsultarArtigos(); 
 					break;
 				case 2:
-					control.LerArrayBackup();
-//					try {
-//						control.ConsultarAmigos();
-//					} catch (ClassNotFoundException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+//					control.LerArrayBackup();
+					control.ConsultarAmigos();
+
 					break;
 				case 3:
 					//Consultar empréstimos

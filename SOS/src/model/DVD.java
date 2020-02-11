@@ -3,6 +3,10 @@ package model;
 
 public class DVD extends Artigo {
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6044036281144985247L;
 		private Integer id = new Integer(0);
 		private String titulo;
 		private String cat = new String();
