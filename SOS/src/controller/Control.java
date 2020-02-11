@@ -1,8 +1,12 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import model.Autor;
 import model.DVD;
 import model.Emprestimo;
@@ -48,32 +52,49 @@ public class Control {
 
 		amigo.add(a);
 	}
-	public void RegEmp(Integer Amigo, Integer id, Emprestimo e)
-
+	public Amigo CheckAmigo(Integer Amigo)
 	{
-		for (Amigo a : amigo) {
+		for (Amigo a : amigo)
+		{
 			if(a.getAmigoID().equals(Amigo))
-			{
-				for (Artigo art : art) {
-					if(art.getArtID().equals(id))
-					{
-						art.setEmprestado(a);
-						a.setEmprestado(art);
-						e.setArtEmp(art);
-						emprestimo.add(e);
-						System.out.println("Empréstimo criado com sucesso!");
-					}
-					else
-					{
-						System.out.println("Nenhum Artigo corresponde ao valor introduzido!");}
-					}
-			}
+				return a;
+		}
+		System.out.println("Nenhum Amigo corresponde ao valor introduzido!");
+		return null;
+	}
+	public Artigo CheckArtigo(Integer id)
+	{
+		for (Artigo art : art)
+		{
+			if(art.getArtID().equals(id))
+				return art;
+		}
+		System.out.println("Nenhum Artigo corresponde ao valor introduzido!");
+		return null;
+		
+	
+	}
+	public void RegEmp(Amigo amigo, Artigo art, Emprestimo e)
+	{	
+		
+			if(amigo.getQuantEmp() <= 0)
+		{
+					System.out.println("Não é possivel este utilizador fazer mais empréstimos!");
+		}
 			else
 			{
-				System.out.println("Nenhum Amigo corresponde ao valor introduzido!");;
-				}
+						art.setEmprestado(amigo);
+						amigo.setEmprestado(art);
+						e.setNome(amigo.getNome());
+						e.setTelefone(amigo.getTelefone());
+						e.setMorada(amigo.getMorada());
+						e.setArtEmp(art);
+					    amigo.ReduzEmp(1);
+						emprestimo.add(e);
+						this.art.remove(art);
+						System.out.println("Empréstimo criado com sucesso!");	
+	}
 			
-		}
 	}
 
 	public void ConsultarArtigos()
@@ -92,13 +113,110 @@ public class Control {
 			System.out.println(e);
 		}
 	}
-	public void ConsultarAmigos()
+	public void ConsultarAmigos() throws IOException, ClassNotFoundException
 	{
-	    	if(amigo.isEmpty() == true)
-	    		System.out.println("Sem Amigos a apresentar!");
-		for (Amigo a : amigo) {
+		
+		if(amigo.isEmpty() == true)
+	        	System.out.println("Sem Amigos a apresentar!");
+	        for (Amigo a : amigo) {
 			
-			System.out.println(a);
+	        		System.out.println(a);
+	        		}
+	 }
+	       
+			
+	
+	public void BackupArtigos() throws IOException
+	{
+		FileOutputStream file = new FileOutputStream("Artigos.dat");
+		ObjectOutputStream oos = new ObjectOutputStream(file);
+		try {
+			oos.writeObject(art);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		oos.close();
+		System.out.println("Backup de Amigos efectuado com sucesso para o ficheiro!");
+	}
+	public void BackupAmigos() throws IOException
+	{
+		try (FileOutputStream file = new FileOutputStream("teste.txt"))
+		{
+			ObjectOutputStream oos = new ObjectOutputStream(file);
+			for (Amigo amigo : amigo) {
+			oos.writeObject(amigo);
+		
+		}
+			oos.writeInt(amigo.size());
+			oos.close();
+		}catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException c)
+		{
+			c.printStackTrace();
+		}
+			
+			
+			
+			System.out.println("Backup de Amigos efectuado com sucesso para o ficheiro!");
+	}
+	public void BackupEmp() throws IOException
+	{
+		FileOutputStream file = new FileOutputStream("Emprestimos.dat");
+		ObjectOutputStream oos = new ObjectOutputStream(file);
+		try {
+			oos.writeObject(emprestimo);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		oos.close();
+		System.out.println("Backup de Empréstimos efectuado com sucesso para o ficheiro!");
+	}
+	
+	public void LerArrayBackup()
+	{
+		
+	        try
+	        {
+	        	ObjectInputStream In = new ObjectInputStream(new FileInputStream("teste.txt"));
+	            
+	        	//ArrayList<Amigo> amigo = (ArrayList<Amigo>)In.readObject();
+	        	
+	        		System.out.println("          	 AMIGOS.DAT           ");
+//	        		for (Amigo x : amigo)
+//	        		{
+//						System.out.println("--------------------------------");
+//						System.out.println(x);
+//					} 
+	        		
+	        		int num = In.readInt();
+	        		for (int i = 0; i < num; i++) {
+	        			Amigo amigo2 = (Amigo)In.readObject();
+						System.out.println(amigo2);
+					}
+	        		
+	        		In.close();
+	          
+	            
+	         }catch(IOException ioe){
+	             ioe.printStackTrace();
+	             return;
+	          }catch(ClassNotFoundException c){
+	             System.out.println("Class not found");
+	             c.printStackTrace();
+	             return;
+	          }
+	        
+	        	
+	        	
+           
+	        	
+	        	
+	        
+	
 	}
 }

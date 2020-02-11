@@ -1,6 +1,10 @@
 package model;
 public class Outro extends Artigo {
 		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6670548198833403409L;
 	private String tipo = new String();
 	private String desc = new String();
 

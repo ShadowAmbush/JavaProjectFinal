@@ -1,11 +1,21 @@
 package model;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.Serializable;
 
-public class Amigo{
+public class Amigo implements Serializable{
 	
-	private static final AtomicInteger count = new AtomicInteger(1);
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1506552126282228832L;
+	/**
+	 * 
+	 */
+	
 	private final Integer amigoID;
+	private static int totalAmigos=0;
 	private String nome = new String();
 	private Integer quantEmp = new Integer(0);
 	private Integer telefone = new Integer(0);
@@ -13,12 +23,14 @@ public class Amigo{
 	private Artigo emprestado;
 	private Artigo reservado;
 	
+	
+	
 	public Integer getAmigoID() {
 		return amigoID;
 	}
 	public Amigo()
 	{
-		amigoID = count.getAndIncrement();
+		amigoID = ++totalAmigos;
 	}
 	public String getNome() {
 		return nome;
@@ -28,6 +40,10 @@ public class Amigo{
 	}
 	public Integer getQuantEmp() {
 		return quantEmp;
+	}
+	public void ReduzEmp(Integer quantEmp)
+	{
+		this.quantEmp -= quantEmp;
 	}
 	public void setQuantEmp(Integer quantEmp) {
 		this.quantEmp = quantEmp;
@@ -45,13 +61,13 @@ public class Amigo{
 		this.morada = morada;
 	}
 	public Artigo getReservado() {
-		return reservado;
+		return this.reservado;
 	}
 	public void setReservado(Artigo reservado) {
 		this.reservado = reservado;
 	}
 	public Artigo getEmprestado() {
-		return emprestado;
+		return this.emprestado;
 	}
 	public void setEmprestado(Artigo emprestado) {
 		this.emprestado = emprestado;
@@ -64,13 +80,7 @@ public class Amigo{
 						"|nome: " + nome +    "\n"+
 						"|telefone: " +telefone+"\n"+
 						"|morada: "+morada+"\n";
-//						if(emprestado.equals(null))
-//							string += "|artigo(s) emprestado(s): \n";
-//						string += "|sem empréstimos feitos\n";
-//						
-//						if(reservado.equals(null))
-//							string += "|artigo(s) reservados(s): \n";
-//						string += "|sem reservas efetuadas feitos\n";
+
 						
 						
 		return string;

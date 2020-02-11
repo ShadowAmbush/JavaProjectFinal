@@ -1,14 +1,24 @@
 package model;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-public class Emprestimo extends Artigo{
+
+public class Emprestimo implements Serializable{
 	
-	private Amigo nome = new Amigo();
-	private Amigo quantEmp = new Amigo();
-	private Amigo telefone = new Amigo();
-	private Amigo morada = new Amigo();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3635448363371970586L;
+
+	/**
+	 * 
+	 */
+	
+
+	private Amigo amigo = new Amigo();
+	
 	private Artigo artEmp;
 	private LocalDate data_Emp = LocalDate.now();
 	private LocalDate data_Lim = data_Emp.plus(1,ChronoUnit.DAYS);
@@ -16,24 +26,36 @@ public class Emprestimo extends Artigo{
 	String Data = data_Emp.format(dataform);
 	DateTimeFormatter datalimite = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	String DataFinal = data_Lim.format(datalimite);
-	public Amigo getNome() {
-		return nome;
+	
+	
+	
+	
+	
+
+	public void setNome(String nome) {
+		this.amigo.setNome(nome);
 	}
-	public void setNome(Amigo nome) {
-		this.nome = nome;
+	public void setTelefone(Integer tele)
+	{
+		this.amigo.setTelefone(tele);
 	}
-	public Amigo getQuantEmp() {
-		return quantEmp;
+	public void setMorada( String morada)
+	{
+		this.amigo.setMorada(morada);
 	}
-	public void setQuantEmp(Amigo quantEmp) {
-		this.quantEmp = quantEmp;
+	public String getNome()
+	{
+		return amigo.getNome();
 	}
-	public Amigo getTelefone() {
-		return telefone;
+	public Integer getTelefone()
+	{
+		return amigo.getTelefone();
 	}
-	public void setTelefone(Amigo telefone) {
-		this.telefone = telefone;
+	public String getMorada()
+	{
+		return amigo.getNome();
 	}
+	
 	public Artigo getArtEmp() {
 		return artEmp;
 	}
@@ -69,9 +91,10 @@ public class Emprestimo extends Artigo{
 		
 		String string = "________________________\n"+
 					    "|       EMPRÉSTIMO       \n"+
-						"|Nome: " + nome +       "\n"+
-						"|Telefone: "+telefone+  "\n"+
-						"|Morada: "+morada+      "\n"+
+						"|Nome: " + amigo.getNome() +       "\n"+
+						"|Telefone: "+amigo.getTelefone()+  "\n"+
+						"|Morada: "+amigo.getMorada()+      "\n"+
+						"|Artigo emprestado: "+artEmp.getArtID()+"\n"+
 						"|Emprestado a: "+Data+  "\n"+
 						"|Devolver até: "+DataFinal+"\n";
 		

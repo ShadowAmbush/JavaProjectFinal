@@ -4,29 +4,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.Scanner;
-
 import controller.Control;
 import model.Admin;
 import model.Amigo;
+import model.Artigo;
 import model.Emprestimo;
 import model.Padrao;
 import model.User;
 
-public class MVCGestEmp implements Serializable{
+public class MVCGestEmp {
      static Integer dias = 3;
-	 static Integer totalEmp = 3;
+	 static Integer totalEmp = 1;
 	
 	static ConfigView config = new ConfigView();
 	static Control control = new Control();
 	static MenuRegArtigo menu = new MenuRegArtigo();
+	static BackupView backup = new BackupView();
 	/**
+	 * @throws ClassNotFoundException 
 	 * 
 	 */
-	private static final long serialVersionUID = -8712655439587384301L;
-	public static void main(String[] args) throws IOException {
+	
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
+		
+		
 		
 		int op;
 		User ativo = restoreUser();
@@ -55,7 +58,9 @@ public class MVCGestEmp implements Serializable{
 					control.ConsultarArtigos(); 
 					break;
 				case 2:
+//					control.LerArrayBackup();
 					control.ConsultarAmigos();
+
 					break;
 				case 3:
 					//Consultar empréstimos
@@ -77,7 +82,7 @@ public class MVCGestEmp implements Serializable{
 					System.out.println("Introduza o telefone:");
 					amigo.setTelefone(IO.getInt());
 					System.out.println("Introduza a morada:");
-					amigo.setNome(IO.getString());
+					amigo.setMorada(IO.getString());
 					amigo.setQuantEmp(totalEmp);
 					control.RegistarAmigo(amigo);
 					break;
@@ -86,11 +91,11 @@ public class MVCGestEmp implements Serializable{
 					Emprestimo emp = new Emprestimo();
 					control.ConsultarAmigos();
 					System.out.println("ID do Amigo a emprestar:");
-					int idamigo = IO.getInt();
+					Amigo a =control.CheckAmigo(IO.getInt());
 					control.ConsultarArtigos();
 					System.out.println("ID do Artigo a emprestar:");
-					int idart =IO.getInt();
-					control.RegEmp(idamigo, idart, emp);
+					Artigo ar = control.CheckArtigo(IO.getInt());
+					control.RegEmp(a, ar, emp);
 					break;
 				case 9:
 					//Registar reserva
@@ -99,6 +104,10 @@ public class MVCGestEmp implements Serializable{
 					//Registar devolução
 					break;
 				case 11:
+					//Backups
+					backup.Backups();
+					break;
+				case 12:
 					//Configurações
 					config.Configuracoes();
 					break;
