@@ -16,6 +16,8 @@ import model.Ferramenta;
 import model.Livro;
 import model.Outro;
 import model.Realizador;
+import model.Reserva;
+import view.IO;
 import model.Artigo;
 import model.Amigo;
 
@@ -24,35 +26,49 @@ public class Control {
 	private  ArrayList<Artigo> art = new ArrayList<Artigo>();
 	private  ArrayList<Amigo> amigo = new ArrayList<Amigo>();
 	private ArrayList<Emprestimo> emprestimo = new ArrayList<>();
+	private ArrayList<Reserva> reservado = new ArrayList<>();
 	@SuppressWarnings("unused")
 	private  ArrayList<Autor> autor = new ArrayList<Autor>();
 	@SuppressWarnings("unused")
 	private  ArrayList<Realizador> realizador = new ArrayList<Realizador>();
-
+	final String amigosFiles = "Amigos.dat";
+	
+	//Registo de Livro
 	public  void RegistarLivro(Livro l) {
 
 		art.add(l);
 	}
+	//Registo de Equipamento
 	public  void RegistarEquip(Equipamento l) {
 
 		art.add(l);
 	}
+	//Registo de DVD
 	public  void RegistarDVD(DVD l) {
 
 		art.add(l);
 	}
+	//Registo de Ferramenta
 	public  void RegistarTool(Ferramenta l) {
 
 		art.add(l);
 	}
+	//Registo de Outro
 	public  void RegistarOutro(Outro l) {
 
 		art.add(l);
 	}
+	//Registo de Reservas
+	public void RegRes(Reserva r)
+	{
+		reservado.add(r);
+	}
+	//Registo de Amigos
 	public  void RegistarAmigo(Amigo a) {
 
 		amigo.add(a);
 	}
+	//Verificar Amigo através de ID
 	public Amigo CheckAmigo(Integer Amigo)
 	{
 		for (Amigo a : amigo)
@@ -63,7 +79,9 @@ public class Control {
 		System.out.println("Nenhum Amigo corresponde ao valor introduzido!");
 		return null;
 	}
+	//verificar Artigo através de ID
 	public Artigo CheckArtigo(Integer id)
+
 	{
 		for (Artigo art : art)
 		{
@@ -75,8 +93,58 @@ public class Control {
 		
 	
 	}
+	//Verificação de Reserva
+	public void verificaReserva(Amigo amigo,Artigo art)
+	{
+		if(art.getQuantRes() <= 0)
+		{
+			System.out.println("Erro! Este artigo já foi reservado!");
+		}
+		else
+		{
+			if(amigo.getQuantRes() <= 0)
+			{
+				System.out.println("Erro! Já tem um artigo reservado!");
+			}
+			else
+			{
+				Reserva reserva = new Reserva();
+				reserva.setAmigo(amigo);
+				reserva.setArtRes(art);
+				for (Emprestimo e : emprestimo) {
+					if(art.getArtID().equals(e.getArtEmp()))
+						reserva.setData(e.getData());
+				}
+				RegRes(reserva);
+				System.out.println("Reserva efetuada para a data: "+reserva.getData());
+			}
+		}
+		
+	}
+	//Registo de Empréstimo
 	public void RegEmp(Amigo amigo, Artigo art, Emprestimo e)
 	{	
+		if(art.getEmprestado() != null)
+		{
+			if(amigo.getAmigoID().equals(art.getEmprestado().getAmigoID()))
+			{
+				System.out.println("Não pode reservar um artigo que já tem emprestado!");
+			}
+			String op;
+			System.out.println("Este artigo já está emprestado, pretende reservá-lo?");
+			System.out.println("S/N?");
+			op = IO.getString().toUpperCase();
+			if(op.contentEquals("S"))
+			{
+				verificaReserva(amigo,art);
+			}
+				
+			else
+			{
+				System.out.println("Reserva não efectuada!");
+			}
+			
+		}
 		
 			if(amigo.getQuantEmp() <= 0)
 		{
@@ -97,7 +165,7 @@ public class Control {
 	}
 			
 	}
-
+	//Consulta de Artigos	
 	public void ConsultarArtigos()
 	{
 		if(art.isEmpty() == true)
@@ -106,6 +174,7 @@ public class Control {
 			System.out.println(a);
 		}
 	}
+	//Consulta de Empréstimos
 	public void ConsultarEmp()
 	{
 		if(emprestimo.isEmpty() == true)
@@ -114,6 +183,7 @@ public class Control {
 			System.out.println(e);
 		}
 	}
+	//Consulta de Amigos
 	public void ConsultarAmigos() throws IOException, ClassNotFoundException
 	{
 		
@@ -124,9 +194,7 @@ public class Control {
 	        		System.out.println(a);
 	        		}
 	 }
-	       
-			
-	
+	//Backup do Array de Artigos para ficheiro
 	public void BackupArtigos() throws IOException
 	{
 		FileOutputStream file = new FileOutputStream("Artigos.dat");
@@ -140,7 +208,7 @@ public class Control {
 		oos.close();
 		System.out.println("Backup de Amigos efectuado com sucesso para o ficheiro!");
 	}
-	final String amigosFiles = "Amigos.dat";
+	//Backup do Array de Amigos para ficheiro
 	public void BackupAmigos() throws IOException
 	{
 		File f = new File("Amigos.dat");
@@ -157,7 +225,8 @@ public class Control {
 			e.printStackTrace();
 		}
 			
-	}
+	}	
+	//Backup do Array de Empréstimos para ficheiro		
 	public void BackupEmp() throws IOException
 	{
 		FileOutputStream file = new FileOutputStream("Emprestimos.dat");
@@ -171,6 +240,7 @@ public class Control {
 		oos.close();
 		System.out.println("Backup de Empréstimos efectuado com sucesso para o ficheiro!");
 	}
+	//Deserialization de objeto do ficheiro       
 	@SuppressWarnings("unchecked")
 	public void restoreAmigos()
 	{
@@ -193,7 +263,11 @@ public class Control {
 				c.printStackTrace();
 			}
 		}
-	}
+	}        	
+	        	
+           
+	        	
+	        	
+	        
 	
-
-}
+	}
