@@ -1,5 +1,6 @@
 package view;
 import view.Run;
+import controller.Control;
 import view.IO;
 
 public class ConfigView {
@@ -12,9 +13,10 @@ public class ConfigView {
 	System.out.println("-----------------------------------");
 	System.out.println("1- Alterar nº de Empréstimos/Pessoa ");
 	System.out.println("2- Alterar nº de dias de data limite");
-	System.out.println("3- Alterar caminho do ficheiro de backup");
-	System.out.println("4- Retroceder                      ");
-	System.out.println("5- Sair                            ");
+	System.out.println("3- Alterar nome do ficheiro de Amigos");
+	System.out.println("4- Alterar nome do ficheiro de Artigos");
+	System.out.println("5- Alterar nome do ficheiro de Empréstimos");
+	System.out.println("6- Retroceder                      ");
 	System.out.println("-----------------------------------");
 	System.out.println("Selecione uma opção:               ");
 	int op = IO.getInt();
@@ -30,13 +32,17 @@ public class ConfigView {
 		Run.dias =(IO.getInt());
 		break;
 	case 3:
-		//Alterar path de ficheiro backup
+		//Alterar nome de ficheiro de Amigos
+		System.out.println("Introduza o novo nome do ficheiro de Amigos?");
+		
 		break;
 	case 4:
-		
+		//Alterar nome de ficheiro de Artigos
+				System.out.println("Introduza o novo nome do ficheiro de Amigos?");
 		break;
 	case 5:
-		
+		//Alterar nome de ficheiro de Empréstimos
+				System.out.println("Introduza o novo nome do ficheiro de Amigos?");
 		break;
 	case 6:
 		

@@ -20,7 +20,7 @@ public class Run {
 	static ConfigView config = new ConfigView();
 	static Control control = new Control();
 	static MenuRegArtigo menu = new MenuRegArtigo();
-	static BackupView backup = new BackupView();
+
 	/**
 	 * @throws ClassNotFoundException 
 	 * 
@@ -68,6 +68,7 @@ public class Run {
 					break;
 				case 4:
 					//Consultar Artigos emprestados
+					control.ConsultarArtigosEmp();
 					break;
 				case 5:
 					//Lista de incumprimentos
@@ -92,33 +93,53 @@ public class Run {
 				case 8:
 					//Registar Empréstimos
 					Emprestimo emp = new Emprestimo();
-					control.ConsultarAmigos();
-					System.out.println("ID do Amigo a emprestar:");
-					Amigo a =control.CheckAmigo(IO.getInt());
-					control.ConsultarArtigos();
-					System.out.println("ID do Artigo a emprestar:");
-					Artigo ar = control.CheckArtigo(IO.getInt());
-					control.RegEmp(a, ar, emp);
+					if(control.ConsultarArtigos() != null)
+					{
+						if(control.ConsultarAmigos() != null)
+						{
+							control.ConsultarAmigos();
+						System.out.println("ID do Amigo a emprestar:");
+						Amigo a =control.CheckAmigo(IO.getInt());
+						control.ConsultarArtigos();
+						System.out.println("ID do Artigo a emprestar:");
+						Artigo ar = control.CheckArtigo(IO.getInt());
+						control.RegEmp(a, ar, emp);
+						}
+					}
 					break;
 				case 9:
-					//Registar reserva
-					break;
-				case 10:
 					//Registar devolução
 					
 					break;
-				case 11:
-					//Backups
+				case 10:
+					//Backup de amigos
 					control.BackupAmigos();
+					
+					break;
+				case 11:
+					//Backup de Artigos
+					control.BackupArtigos();
+					
 					break;
 				case 12:
+					//Backup de Empréstimos
+					control.BackupEmp();
+					
+					break;
+				case 13:
+					//Backup de Reservas
+					//control.BackupRes();
+					
+					break;
+				case 14:
 					//Leitura do ficheiro para o array de Amigos
 					control.restoreAmigos();
 					break;
-				case 13:
+				case 15:
 					//Configurações
 					config.Configuracoes();
 					break;
+				
 				case 0:
 					
 					break;

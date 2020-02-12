@@ -18,6 +18,7 @@ public abstract class Artigo implements Serializable{
 	private final Integer artID;
 	private Amigo emprestado;
 	private Amigo reservado;
+	private Integer quantRes = new Integer(0);
 	
 	public Artigo()
 	{
@@ -26,8 +27,17 @@ public abstract class Artigo implements Serializable{
 	public Integer getArtID() {
 		return artID;
 	}
+	public void ReduzRes(Integer quantRes)
+	{
+		this.quantRes -= quantRes;
+	}
 	
-
+	public Integer getQuantRes() {
+		return quantRes;
+	}
+	public void setQuantRes(Integer quantRes) {
+		this.quantRes = quantRes;
+	}
 	public Amigo getEmprestado() {
 		return emprestado;
 	}

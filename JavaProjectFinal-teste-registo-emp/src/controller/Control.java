@@ -2,11 +2,11 @@ package controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import model.Autor;
 import model.DVD;
@@ -31,8 +31,16 @@ public class Control {
 	private  ArrayList<Autor> autor = new ArrayList<Autor>();
 	@SuppressWarnings("unused")
 	private  ArrayList<Realizador> realizador = new ArrayList<Realizador>();
-	final String amigosFiles = "Amigos.dat";
+	private String amigosFiles = "Amigos.dat";
 	
+	
+	
+	public String getAmigosFiles() {
+		return amigosFiles;
+	}
+	public void setAmigosFiles(String amigosFiles) {
+		this.amigosFiles = amigosFiles;
+	}
 	//Registo de Livro
 	public  void RegistarLivro(Livro l) {
 
@@ -111,9 +119,11 @@ public class Control {
 				Reserva reserva = new Reserva();
 				reserva.setAmigo(amigo);
 				reserva.setArtRes(art);
+				amigo.ReduzRes(1);
+				art.ReduzRes(1);
 				for (Emprestimo e : emprestimo) {
 					if(art.getArtID().equals(e.getArtEmp()))
-						reserva.setData(e.getData());
+						reserva.setData(e.getDataFinal());
 				}
 				RegRes(reserva);
 				System.out.println("Reserva efetuada para a data: "+reserva.getData());
@@ -130,26 +140,30 @@ public class Control {
 			{
 				System.out.println("Não pode reservar um artigo que já tem emprestado!");
 			}
-			String op;
-			System.out.println("Este artigo já está emprestado, pretende reservá-lo?");
-			System.out.println("S/N?");
-			op = IO.getString().toUpperCase();
-			if(op.contentEquals("S"))
-			{
-				verificaReserva(amigo,art);
-			}
-				
 			else
 			{
-				System.out.println("Reserva não efectuada!");
-			}
+					String op;
+					System.out.println("Este artigo já está emprestado, quer que verifique se pode reservá-lo?");
+					System.out.println("S/N?");
+					op = IO.getString().toUpperCase();
+					if(op.contentEquals("S"))
+					{
+						verificaReserva(amigo,art);
+					}
+						
+					else
+					{
+						System.out.println("Reserva não efectuada!");
+					}
 			
+			}
 		}
-		
-			if(amigo.getQuantEmp() <= 0)
+		else
 		{
-					System.out.println("Não é possivel este utilizador fazer mais empréstimos!");
-		}
+			if(amigo.getQuantEmp() <= 0)
+			{
+				System.out.println("Não é possivel este utilizador fazer mais empréstimos!");
+			}
 			else
 			{
 						art.setEmprestado(amigo);
@@ -160,19 +174,24 @@ public class Control {
 						e.setArtEmp(art);
 					    amigo.ReduzEmp(1);
 						emprestimo.add(e);
-						this.art.remove(art);
+						
 						System.out.println("Empréstimo criado com sucesso!");	
-	}
+			}
 			
+		}
 	}
 	//Consulta de Artigos	
-	public void ConsultarArtigos()
+	public Integer ConsultarArtigos()
 	{
 		if(art.isEmpty() == true)
+		{
     		System.out.println("Sem Artigos a apresentar!");
+    		return null;
+		}
 		for (Artigo a : art) {
 			System.out.println(a);
 		}
+		return 1;
 	}
 	//Consulta de Empréstimos
 	public void ConsultarEmp()
@@ -184,16 +203,36 @@ public class Control {
 		}
 	}
 	//Consulta de Amigos
-	public void ConsultarAmigos() throws IOException, ClassNotFoundException
+	public Integer ConsultarAmigos() throws IOException, ClassNotFoundException
 	{
 		
 		if(amigo.isEmpty() == true)
+		{
 	        	System.out.println("Sem Amigos a apresentar!");
+				return null;
+		}else
+		{
 	        for (Amigo a : amigo) {
 			
 	        		System.out.println(a);
 	        		}
+		}
+		return 1;
 	 }
+	
+
+	public void ConsultarArtigosEmp()
+	{
+		if(art.isEmpty() == true)
+    		System.out.println("Sem Artigos a apresentar!");
+		for (Artigo a : art) {
+			if(a.getEmprestado() != null)
+				System.out.println(a);
+			
+		}
+		System.out.println("Não existem Artigos emprestado ainda!");
+	}
+	
 	//Backup do Array de Artigos para ficheiro
 	public void BackupArtigos() throws IOException
 	{
@@ -265,9 +304,69 @@ public class Control {
 		}
 	}        	
 	        	
-           
-	        	
+	  public Integer checkISBN(Integer id)
+	     {
+	    	 for (Artigo a : art) 
+	    	 {
+	    		 if(a.getClass().getSimpleName().equals("Livro"))
+	    		 {
+						try 
+						{
+							if(a.getClass().getMethod("getISBN") != null)
+								 
+								if(a.getClass().getMethod("getISBN").invoke(a).equals(id))
+								{
+									
+									System.out.println("Já existe um livro registado com o ISBN: "+a.getClass().getMethod("getISBN").invoke(a));
+									return 1;
+								
+								}
+						} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+								| IllegalArgumentException | InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	    		 
+	    		 }
+	
+	    	 }
+			
+			return null;
 	        	
 	        
+	     }       
+     public Integer checkIDDVD(Integer id)
+	     {
+	    	 for (Artigo a : art) 
+	    	 {
+	    		 if(a.getClass().getSimpleName().equals("DVD"))
+	    		 {
+						try 
+						{
+							if(a.getClass().getMethod("getId") != null)
+								 
+								if(a.getClass().getMethod("getId").invoke(a).equals(id))
+								{
+									
+									System.out.println("Já existe um DVD registado com o Id: "+a.getClass().getMethod("getId").invoke(a));
+									return 1;
+								
+								}
+						} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+								| IllegalArgumentException | InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	    		 
+	    		 }
 	
+	    	 }
+			
+			return null;
+	        	
+	        
+	     }
+   
+    
+     
 	}

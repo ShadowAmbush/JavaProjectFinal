@@ -52,6 +52,10 @@ public class Amigo implements Serializable{
 	{
 		this.quantEmp -= quantEmp;
 	}
+	public void ReduzRes(Integer quantRes)
+	{
+		this.quantRes -= quantRes;
+	}
 	public void setQuantEmp(Integer quantEmp) {
 		this.quantEmp = quantEmp;
 	}
